@@ -1,3 +1,9 @@
+// Recuperar carrito al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    articulosCarrito = JSON.parse(localStorage.getItem('carrito')) || []
+    carritoHTML()
+})
+
 // Vaciando el carrito
 
 //  *** Variables *** 
@@ -22,7 +28,12 @@ function cargarEventListeners () {
 }
 
 
-//  *** Funciones *** 
+//  *** Funciones ***
+
+// Función para guardar carrito en LocalStorage
+function guardarEnLocalStorage() {
+    localStorage.setItem('carrito', JSON.stringify(articulosCarrito))
+}
 
 // Función para añadir cursos al carrito
 function añadirCurso(e) {
@@ -39,6 +50,7 @@ function añadirCurso(e) {
         const cursoId = e.target.getAttribute('data-id')
         articulosCarrito = articulosCarrito.filter((curso) => curso.id !== cursoId)
         carritoHTML(articulosCarrito)
+        guardarEnLocalStorage()
     }
  }
 
@@ -66,6 +78,7 @@ function añadirCurso(e) {
         articulosCarrito = [...articulosCarrito, infoCurso]
     }
     carritoHTML(articulosCarrito)
+    guardarEnLocalStorage()
  }
 
  // Muestra el carrito de compras en el HTML
